@@ -15,7 +15,7 @@ export class DishService {
   getDishes(): Observable<Dish[]> {
     return of(DISHES).pipe(delay(2000));
   }
-
+  
   getDish(id: string): Observable<Dish> {
     return of(DISHES.filter((dish) => (dish.id === id)) [0]).pipe(delay(2000));
   }
