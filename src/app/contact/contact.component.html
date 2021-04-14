@@ -37,9 +37,8 @@
     </div>
   </div>
 
-  <div fxFlex fxFlexOffset="20px" class="form-size">
+  <div fxFlex fxFlexOffset="20px" class="form-size" *ngIf="!isLoading">
     <h3>Send us your feedback</h3>
-    <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
 
     <form novalidate [formGroup]="feedbackForm" #fform="ngForm" (ngSubmit)="onSubmit()">
       <p>
@@ -69,7 +68,7 @@
         <td>
           <mat-select placeholder="How?" formControlName="contacttype">
             <mat-option *ngFor="let ctype of contactType" [value]="ctype">
-             {{ ctype }}
+              {{ ctype }}
             </mat-option>
           </mat-select>
         </td>
@@ -82,5 +81,23 @@
       <button type="submit" mat-button class="background-primary text-floral-white"
         [disabled]="feedbackForm.invalid">Submit</button>
     </form>
+  </div>
+  <div fxFlex fxFlexOffset="20px" *ngIf = "isLoading && !isShowingResponse" 
+      style = "display:fxFlex; justify-content: center; align-items: center;" [@expand]>
+      <mat-progress-spinner color="primary" mode="indeterminate">
+      </mat-progress-spinner>
+      <h4>Loading... Please Wait</h4>
+    </div>
+  <div *ngIf="isShowingResponse" [@expand]>
+    <h4>Your Submission</h4>
+    <p>
+      First Name: {{ feedback.firstname }} <br/>
+      Last Name: {{ feedback.lastname }} <br/>
+      Tel. Number: {{ feedback.telnum }} <br/>
+      Email: {{ feedback.email }} <br/>
+      Contact You?: {{ feedback.agree }} <br/>
+      How?: {{ feedback.contacttype }} <br/>
+      Feedback: {{ feedback.message }} <br/>
+    </p>
   </div>
 </div>
